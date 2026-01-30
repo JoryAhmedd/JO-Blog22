@@ -9,6 +9,7 @@
     padding: 0 10px;
     background-color: #222;
     color: #fff;
+    transition: 300ms;
 }
 
 .menu-button {
@@ -43,8 +44,14 @@
     background-color: aqua;
     height: calc(100vh - 60px);
     width: 75%;
-    /* transform: translateX(-101%);
-    transition: 0.3s; */
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: 300ms;
+}
+
+.show-nav-list {
+    transform: translateX(0);
+    visibility: visible;
 }
 
 @media (min-width: 767px) {
