@@ -1,6 +1,12 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --white: #ffffff;
+  --black: #171717;
+  --color-one: #233142;
+  --color-two: #455d7a;
+  --color-three: #e3e3e3;
+  --red: #f95959;
+  --transition: 300ms;
+  --transition2: 200ms;
 }
 
 * {
@@ -27,12 +33,14 @@ button {
 }
 
 .main {
-  max-width: 900px;
-  background-color: antiquewhite;
-  margin: auto;
-  transform: translateY(60px);
-  padding: 20px;
-  min-height: calc(100vh - 60px);
-  max-height: calc(100vh - 60px);
   overflow-y: auto;
+  transform: translateY(60px);
+}
+
+.main-section {
+  max-width: 1200px;
+  background-color: var(--color-three);
+  padding: 20px;
+  margin: auto;
+  min-height: calc(100vh - 60px);
 }

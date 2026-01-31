@@ -1,3 +1,4 @@
+//   في الويب كلهrender اول ملف بيتعمله 
 import Navbar from "@/Components/Navbar/Navbar";
 import "./globals.css";
 
@@ -11,7 +12,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <Navbar />
-        <main className="main">{children}</main>
+        <main className="main">
+          <section className="main-section">{children}</section>
+        </main>
       </body>
     </html>
   );
