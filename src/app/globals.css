@@ -7,6 +7,7 @@
   --red: #f95959;
   --transition: 300ms;
   --transition2: 200ms;
+  --border: 1px solid #fff;
 }
 
 * {
@@ -22,14 +23,6 @@ a {
 
 ul {
   list-style: none;
-}
-
-button {
-  cursor: pointer;
-  min-width: 50px;
-  background-color: #eee;
-  padding: 8px 15px;
-  border: 1px solid #171717;
 }
 
 .main {

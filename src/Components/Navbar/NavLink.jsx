@@ -8,7 +8,7 @@ export default function NavLink({href, text, hideNavList}) {
     const pathname = usePathname();
 
     // 1) href: where will I go by clicking on the link, (from parent).
-    // 2) pathname: current link where am I, (from browser).
+    // 2) pathname: current link where I am, (from browser).
     const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
     
     return (
