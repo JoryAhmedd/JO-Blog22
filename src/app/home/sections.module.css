@@ -1,0 +1,55 @@
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.section2 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: fit-content;
+    gap: 15px;
+}
+
+.title {
+    font-size: 45px;
+    text-transform: uppercase;
+    color: var(--color-one);
+}
+
+.title2 {
+    font-size: 40px;
+    color: var(--color-one);
+    text-decoration: underline;
+}
+
+.description {
+    font-size: 30px;
+    color: var(--color-two);
+}
+
+.button {
+    font-size: 20px;
+    margin: 5px;
+}
+
+.h3 {
+    font-size: 25px;
+    color: var(--color-one);
+    background-color: var(--white);
+    border-left: 5px solid var(--color-one);
+    border-radius: 15px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.p {
+    font-size: 20px;
+    color: var(--color-two);
+    margin-left: 20px;
+}
+
