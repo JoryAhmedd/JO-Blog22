@@ -1,9 +1,5 @@
-import Welcome from "@/Components/Home/Welcome";
+import HomePage from "./home/page";
 
 export default function Home() {
-  return (
-    <section>
-      <Welcome />
-    </section>
-  );
+  return <HomePage />;
 }

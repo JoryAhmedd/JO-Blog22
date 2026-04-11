@@ -1,0 +1,23 @@
+.menu-nav {
+  background: #fff;
+  padding: 15px 50px;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-nav ul {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  justify-content: center;
+}
+
+.menu-nav li {
+  cursor: pointer;
+  font-weight: 500;
+  color: #1f2937;
+  transition: 0.3s;
+}
+
+.menu-nav li:hover {
+  color: #ff6b35;
+}
