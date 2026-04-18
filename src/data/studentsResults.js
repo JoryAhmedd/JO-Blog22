@@ -1,4 +1,4 @@
-export const studentsResults = {
+export const STUDENTS_RESULTS = {
   1: [
     { name: "Mohamed Ali", math: 45, arabic: 47, english: 42, science: 44 },
     { name: "Ahmed Hassan", math: 40, arabic: 43, english: 38, science: 41 },

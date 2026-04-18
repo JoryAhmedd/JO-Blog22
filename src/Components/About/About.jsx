@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 
 const About = () => {
-  const [name, setName] = useState("mohamed");
+  const [name, setName] = useState("");
+
   useEffect(() => {
     console.log("Use Effect:", name);
   }, [name]);

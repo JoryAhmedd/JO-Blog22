@@ -38,3 +38,33 @@ ul {
   margin: auto;
   min-height: calc(100vh - 60px);
 }
+
+table th {
+  background-color: var(--color-one);
+  color: var(--color-three);
+  padding: 5px 10px;
+}
+
+table td {
+  padding: 3px 8px;
+  text-align: center;
+}
+
+table td.no-center {
+  text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: var(--grey);
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: var(--color-two);
+}
+
+.title {
+  color: var(--black);
+  padding: 10px;
+  margin: auto;
+
+}
