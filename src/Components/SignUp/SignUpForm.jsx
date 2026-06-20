@@ -2,133 +2,189 @@
 
 import { useState } from "react";
 
-import Button from "../UiElements/Button";
-import Input from "../UiElements/Input";
-import { isEmail, isEmpty, minLength } from "@/helpers/validators";
+export default function SignUp() {
+  const [name, setName] = useState({
+    value: "",
+    isValid: false,
+    touched: false,
+  });
 
-import classes from "./SignUpForm.module.css";
+  const [email, setEmail] = useState({
+    value: "",
+    isValid: false,
+    touched: false,
+  });
 
-export default function SignUpForm() {
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState(false);
+  const [birthdate, setBirthdate] = useState({
+    value: "",
+    isValid: false,
+    touched: false,
+  });
 
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState({
+    value: "",
+    isValid: false,
+    touched: false,
+  });
 
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState({
+    value: "",
+    isValid: false,
+    touched: false,
+  });
 
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+  // change
 
-  const [birthdate, setBirthdate] = useState("");
-  const [birthdateError, setBirthdateError] = useState(false);
+  const handleNameChange = (e) => {
+    setName({
+      value: e.target.value,
+      touched: name.touched,
+      isValid: e.target.value.trim().length >= 3,
+    });
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleEmailChange = (e) => {
+    setEmail({
+      value: e.target.value,
+      touched: email.touched,
+      isValid: e.target.value.includes("@"),
+    });
+  };
 
-    if (
-      isEmpty(name) ||
-      !isEmail(email) ||
-      !minLength(password) ||
-      password !== passwordConfirm ||
-      isEmpty(birthdate)
-    ) {
-      if (isEmpty(name)) setNameError(true);
-      if (!isEmail(email)) setEmailError(true);
-      if (!minLength(password, 8)) setPasswordError(true);
-      if (password !== passwordConfirm) setPasswordConfirmError(true);
-      if (isEmpty(birthdate)) setBirthdateError(true);
+  const handleBirthdateChange = (e) => {
+    setBirthdate({
+      value: e.target.value,
+      touched: birthdate.touched,
+      isValid: e.target.value !== "",
+    });
+  };
 
-      return;
-    }
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
 
-    setName("");
-    setEmail("");
-    setPassword("");
-    setPasswordConfirm("");
-    setBirthdate("");
+    setPassword({
+      value: e.target.value,
+      touched: password.touched,
+      isValid: newPassword.length >= 8,
+    });
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm({
+      value: e.target.value,
+      touched: passwordConfirm.touched,
+      isValid: e.target.value === password.value,
+    });
+  };
+
+  // Touched
+
+  const handleNameTouched = () => {
+    setName((prev) => ({ ...prev, touched: true }));
+  };
+
+  const handleEmailTouched = () => {
+    setEmail((prev) => ({ ...prev, touched: true }));
+  };
+
+  const handleBirthdateTouched = () => {
+    setBirthdate((prev) => ({ ...prev, touched: true }));
+  };
+
+  const handlePasswordTouched = () => {
+    setPassword((prev) => ({ ...prev, touched: true }));
+  };
+
+  const handlePasswordConfirmTouched = () => {
+    setPasswordConfirm((prev) => ({
+      ...prev,
+      touched: true,
+    }));
   };
 
   return (
-    <form onSubmit={handleSubmit} className={classes["signup-form"]}>
-      <h3>Sign Up</h3>
+    <form>
+      <h3>Create New Account</h3>
 
-      <Input
-        id="name"
-        type="text"
-        label="Name"
-        placeholder="Enter your name"
-        value={name}
-        error={nameError}
-        errorText="Please enter a valid name"
-        onChange={(e) => {
-          const { value } = e.target;
-          setName(value);
-          if (!isEmpty(value)) setNameError(false);
-        }}
-      />
+      <div>
+        <label>Full Name</label>
+        <input
+          type="text"
+          value={name.value}
+          onChange={handleNameChange}
+          onBlur={handleNameTouched}
+        />
 
-      <Input
-        id="email"
-        type="email"
-        label="Email"
-        placeholder="Enter your email"
-        value={email}
-        error={emailError}
-        errorText="Please enter a valid email"
-        onChange={(e) => {
-          const { value } = e.target;
-          setEmail(value);
-          if (isEmail(value)) setEmailError(false);
-        }}
-      />
+        <p>
+          {!name.isValid && name.touched
+            ? "Name should be at least 3 chars"
+            : ""}
+        </p>
+      </div>
 
-      <Input
-        id="password"
-        type="password"
-        label="Password"
-        placeholder="Enter password"
-        value={password}
-        error={passwordError}
-        errorText="Password must be at least 8 characters"
-        onChange={(e) => {
-          const { value } = e.target;
-          setPassword(value);
-          if (minLength(value)) setPasswordError(false);
-        }}
-      />
+      <div>
+        <label>Email</label>
+        <input
+          type="email"
+          value={email.value}
+          onChange={handleEmailChange}
+          onBlur={handleEmailTouched}
+        />
 
-      <Input
-        id="passwordConfirm"
-        type="password"
-        label="Password Confirm"
-        placeholder="Confirm password"
-        value={passwordConfirm}
-        error={passwordConfirmError}
-        errorText="Passwords do not match"
-        onChange={(e) => {
-          const { value } = e.target;
-          setPasswordConfirm(value);
-          if (value === password) setPasswordConfirmError(false);
-        }}
-      />
+        <p>
+          {!email.isValid && email.touched
+            ? "Please provide a valid email"
+            : ""}
+        </p>
+      </div>
 
-      <Input
-        id="birthdate"
-        type="date"
-        label="Birthdate"
-        value={birthdate}
-        error={birthdateError}
-        errorText="Please select your birthdate"
-        onChange={(e) => {
-          const { value } = e.target;
-          setBirthdate(value);
-          if (!isEmpty(value)) setBirthdateError(false);
-        }}
-      />
+      <div>
+        <label>Birthdate</label>
+        <input
+          type="date"
+          value={birthdate.value}
+          onChange={handleBirthdateChange}
+          onBlur={handleBirthdateTouched}
+        />
 
-      <Button className={classes["btn"]}>Sign Up</Button>
+        <p>
+          {!birthdate.isValid && birthdate.touched
+            ? "Please provide a birthdate"
+            : ""}
+        </p>
+      </div>
+
+      <div>
+        <label>Password</label>
+        <input
+          type="password"
+          value={password.value}
+          onChange={handlePasswordChange}
+          onBlur={handlePasswordTouched}
+        />
+
+        <p>
+          {!password.isValid && password.touched
+            ? "Password should be at least 8 chars"
+            : ""}
+        </p>
+      </div>
+
+      <div>
+        <label>Password Confirm</label>
+        <input
+          type="password"
+          value={passwordConfirm.value}
+          onChange={handlePasswordConfirmChange}
+          onBlur={handlePasswordConfirmTouched}
+        />
+
+        <p>
+          {!passwordConfirm.isValid && passwordConfirm.touched
+            ? "Passwords don't match"
+            : ""}
+        </p>
+      </div>
     </form>
   );
 }

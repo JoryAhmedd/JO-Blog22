@@ -1,10 +1,6 @@
-"use client";
-
 import ResultsTable from "./ResultsTable";
 
 const Results = ({ grade, results }) => {
-  console.log(results);
-
   return (
     <div>
       <h2 className="title">Grade {grade} Results</h2>
@@ -13,4 +9,5 @@ const Results = ({ grade, results }) => {
     </div>
   );
 };
+
 export default Results;

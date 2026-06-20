@@ -74,7 +74,6 @@ export const STUDENTS_RESULTS = {
     { name: "Yasmin Osama", math: 48, arabic: 47, english: 46, science: 48 },
     { name: "Huda Fady", math: 40, arabic: 41, english: 39, science: 40 },
     { name: "Nada Ramy", math: 43, arabic: 44, english: 42, science: 43 },
-
   ],
 
   3: [
@@ -88,7 +87,5 @@ export const STUDENTS_RESULTS = {
     { name: "Hassan Medhat", math: 46, arabic: 45, english: 44, science: 45 },
     { name: "Ibrahim Yasser", math: 41, arabic: 42, english: 40, science: 41 },
     { name: "Khaled Waheed", math: 44, arabic: 43, english: 42, science: 43 },
-
-    
   ],
 };
