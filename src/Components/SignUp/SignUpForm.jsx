@@ -60,12 +60,10 @@ export default function SignUp() {
   };
 
   const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-
     setPassword({
       value: e.target.value,
       touched: password.touched,
-      isValid: newPassword.length >= 8,
+      isValid: e.target.value.length >= 8,
     });
   };
 
