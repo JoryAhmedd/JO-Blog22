@@ -1,188 +1,134 @@
 "use client";
 
-import { useState } from "react";
+import {
+  isEmail,
+  isPast,
+  minLength,
+  passwordsMatch,
+} from "@/helpers/validators";
+import { useMemo, useState } from "react";
+import Input from "../UiElements/Input";
+import Button from "../UiElements/Button";
 
-export default function SignUp() {
-  const [name, setName] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
+const formValidators = {
+  name: minLength,
+  email: isEmail,
+  birthdate: isPast,
+  password: minLength,
+  passwordConfirm: passwordsMatch,
+};
+
+const SignUp = () => {
+  const [formState, setFormState] = useState({
+    name: { value: "", isValid: false, touched: false },
+    email: { value: "", isValid: false, touched: false },
+    birthdate: { value: "", isValid: false, touched: false },
+    password: { value: "", isValid: false, touched: false },
+    passwordConfirm: { value: "", isValid: false, touched: false },
   });
 
-  const [email, setEmail] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
-  });
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
 
-  const [birthdate, setBirthdate] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
-  });
-
-  const [password, setPassword] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
-  });
-
-  const [passwordConfirm, setPasswordConfirm] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
-  });
-
-  // change
-
-  const handleNameChange = (e) => {
-    setName({
-      value: e.target.value,
-      touched: name.touched,
-      isValid: e.target.value.trim().length >= 3,
-    });
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail({
-      value: e.target.value,
-      touched: email.touched,
-      isValid: e.target.value.includes("@"),
-    });
-  };
-
-  const handleBirthdateChange = (e) => {
-    setBirthdate({
-      value: e.target.value,
-      touched: birthdate.touched,
-      isValid: e.target.value !== "",
-    });
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword({
-      value: e.target.value,
-      touched: password.touched,
-      isValid: e.target.value.length >= 8,
-    });
-  };
-
-  const handlePasswordConfirmChange = (e) => {
-    setPasswordConfirm({
-      value: e.target.value,
-      touched: passwordConfirm.touched,
-      isValid: e.target.value === password.value,
-    });
-  };
-
-  // Touched
-
-  const handleNameTouched = () => {
-    setName((prev) => ({ ...prev, touched: true }));
-  };
-
-  const handleEmailTouched = () => {
-    setEmail((prev) => ({ ...prev, touched: true }));
-  };
-
-  const handleBirthdateTouched = () => {
-    setBirthdate((prev) => ({ ...prev, touched: true }));
-  };
-
-  const handlePasswordTouched = () => {
-    setPassword((prev) => ({ ...prev, touched: true }));
-  };
-
-  const handlePasswordConfirmTouched = () => {
-    setPasswordConfirm((prev) => ({
+    setFormState((prev) => ({
       ...prev,
-      touched: true,
+      [name]: {
+        ...prev[name],
+        value,
+        isValid: formValidators[name]({
+          value,
+          value2: prev.password.value,
+          min: name === "name" ? 3 : name === "password" ? 6 : 0,
+        }),
+      },
     }));
   };
+
+  const handleInputTouch = (e) => {
+    const { name } = e.target;
+
+    setFormState((prev) => ({
+      ...prev,
+      [name]: { ...prev[name], touched: true },
+    }));
+  };
+
+  // هل فيه واحدة منهم الفاليد بتاعها ب فولس؟
+  // every: هتعدي عليهم كلهم ولازم كلهم يوافقوا الشرط
+  // some: بعضهم
+  const formIsValid = useMemo(
+    () => Object.keys(formState).every((el) => formState[el].isValid),
+    [formState],
+    // القوسين اللي في الاخر دول معناهم اننا عايزاها تشتغل لما ال فورم ستيت تتغير
+  );
 
   return (
     <form>
       <h3>Create New Account</h3>
+      <Input
+        id="name"
+        type="text"
+        name="name"
+        label="Full Name"
+        placeholder="write ur full name"
+        errorText="Name should be at least 3 chars"
+        inputState={formState.name}
+        onChange={handleInputChange}
+        onBlur={handleInputTouch}
+      />
 
-      <div>
-        <label>Full Name</label>
-        <input
-          type="text"
-          value={name.value}
-          onChange={handleNameChange}
-          onBlur={handleNameTouched}
-        />
+      <Input
+        id="email"
+        type="email"
+        name="email"
+        label="Email"
+        placeholder="write an exist email"
+        errorText="Please provide a valid email"
+        inputState={formState.email}
+        onChange={handleInputChange}
+        onBlur={handleInputTouch}
+      />
 
-        <p>
-          {!name.isValid && name.touched
-            ? "Name should be at least 3 chars"
-            : ""}
-        </p>
-      </div>
+      <Input
+        id="birthdate"
+        type="date"
+        name="birthdate"
+        label="Birthdate"
+        errorText="Please provide a valid birthdate"
+        inputState={formState.birthdate}
+        onChange={handleInputChange}
+        onBlur={handleInputTouch}
+      />
 
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          value={email.value}
-          onChange={handleEmailChange}
-          onBlur={handleEmailTouched}
-        />
+      <Input
+        id="password"
+        type="password"
+        name="password"
+        label="Password"
+        errorText="Password must be at least 6 chars"
+        placeholder="******"
+        inputState={formState.password}
+        onChange={handleInputChange}
+        onBlur={handleInputTouch}
+      />
 
-        <p>
-          {!email.isValid && email.touched
-            ? "Please provide a valid email"
-            : ""}
-        </p>
-      </div>
+      <Input
+        id="passwordConfirm"
+        type="password"
+        name="passwordConfirm"
+        label="PasswordConfirm"
+        errorText="Passwords must match"
+        placeholder="******"
+        inputState={formState.passwordConfirm}
+        onChange={handleInputChange}
+        onBlur={handleInputTouch}
+      />
 
-      <div>
-        <label>Birthdate</label>
-        <input
-          type="date"
-          value={birthdate.value}
-          onChange={handleBirthdateChange}
-          onBlur={handleBirthdateTouched}
-        />
-
-        <p>
-          {!birthdate.isValid && birthdate.touched
-            ? "Please provide a birthdate"
-            : ""}
-        </p>
-      </div>
-
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          value={password.value}
-          onChange={handlePasswordChange}
-          onBlur={handlePasswordTouched}
-        />
-
-        <p>
-          {!password.isValid && password.touched
-            ? "Password should be at least 8 chars"
-            : ""}
-        </p>
-      </div>
-
-      <div>
-        <label>Password Confirm</label>
-        <input
-          type="password"
-          value={passwordConfirm.value}
-          onChange={handlePasswordConfirmChange}
-          onBlur={handlePasswordConfirmTouched}
-        />
-
-        <p>
-          {!passwordConfirm.isValid && passwordConfirm.touched
-            ? "Passwords don't match"
-            : ""}
-        </p>
-      </div>
+      <Button disabled={formIsValid} onClick={() => {}}>
+        Sign Up
+      </Button>
     </form>
   );
-}
+};
+
+export default SignUp;
