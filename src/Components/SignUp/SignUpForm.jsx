@@ -6,9 +6,10 @@ import {
   minLength,
   passwordsMatch,
 } from "@/helpers/validators";
-import { useMemo, useState } from "react";
+import { useCallback } from "react";
 import Input from "../UiElements/Input";
 import Button from "../UiElements/Button";
+import useForm from "@/hooks/useForm";
 
 const formValidators = {
   name: minLength,
@@ -17,53 +18,26 @@ const formValidators = {
   password: minLength,
   passwordConfirm: passwordsMatch,
 };
+const initialState = {
+  name: { value: "", isValid: false, touched: false },
+  email: { value: "", isValid: false, touched: false },
+  birthdate: { value: "", isValid: false, touched: false },
+  password: { value: "", isValid: false, touched: false },
+  passwordConfirm: { value: "", isValid: false, touched: false },
+};
 
 const SignUp = () => {
-  const [formState, setFormState] = useState({
-    name: { value: "", isValid: false, touched: false },
-    email: { value: "", isValid: false, touched: false },
-    birthdate: { value: "", isValid: false, touched: false },
-    password: { value: "", isValid: false, touched: false },
-    passwordConfirm: { value: "", isValid: false, touched: false },
+  const { formState, handleChange, handleTouch, formIsValid } = useForm({
+    initialState,
+    formValidators,
   });
 
-  const handleInputChange = (e) => {
-    const { value, name } = e.target;
-
-    setFormState((prev) => ({
-      ...prev,
-      [name]: {
-        ...prev[name],
-        value,
-        isValid: formValidators[name]({
-          value,
-          value2: prev.password.value,
-          min: name === "name" ? 3 : name === "password" ? 6 : 0,
-        }),
-      },
-    }));
-  };
-
-  const handleInputTouch = (e) => {
-    const { name } = e.target;
-
-    setFormState((prev) => ({
-      ...prev,
-      [name]: { ...prev[name], touched: true },
-    }));
-  };
-
-  // هل فيه واحدة منهم الفاليد بتاعها ب فولس؟
-  // every: هتعدي عليهم كلهم ولازم كلهم يوافقوا الشرط
-  // some: بعضهم
-  const formIsValid = useMemo(
-    () => Object.keys(formState).every((el) => formState[el].isValid),
-    [formState],
-    // القوسين اللي في الاخر دول معناهم اننا عايزاها تشتغل لما ال فورم ستيت تتغير
-  );
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+  }, []);
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h3>Create New Account</h3>
       <Input
         id="name"
@@ -73,8 +47,9 @@ const SignUp = () => {
         placeholder="write ur full name"
         errorText="Name should be at least 3 chars"
         inputState={formState.name}
-        onChange={handleInputChange}
-        onBlur={handleInputTouch}
+        onChange={handleChange}
+        onBlur={handleTouch}
+        minLength={3}
       />
 
       <Input
@@ -85,8 +60,8 @@ const SignUp = () => {
         placeholder="write an exist email"
         errorText="Please provide a valid email"
         inputState={formState.email}
-        onChange={handleInputChange}
-        onBlur={handleInputTouch}
+        onChange={handleChange}
+        onBlur={handleTouch}
       />
 
       <Input
@@ -96,8 +71,8 @@ const SignUp = () => {
         label="Birthdate"
         errorText="Please provide a valid birthdate"
         inputState={formState.birthdate}
-        onChange={handleInputChange}
-        onBlur={handleInputTouch}
+        onChange={handleChange}
+        onBlur={handleTouch}
       />
 
       <Input
@@ -108,8 +83,9 @@ const SignUp = () => {
         errorText="Password must be at least 6 chars"
         placeholder="******"
         inputState={formState.password}
-        onChange={handleInputChange}
-        onBlur={handleInputTouch}
+        onChange={handleChange}
+        onBlur={handleTouch}
+        minLength={6}
       />
 
       <Input
@@ -120,11 +96,11 @@ const SignUp = () => {
         errorText="Passwords must match"
         placeholder="******"
         inputState={formState.passwordConfirm}
-        onChange={handleInputChange}
-        onBlur={handleInputTouch}
+        onChange={handleChange}
+        onBlur={handleTouch}
       />
 
-      <Button disabled={formIsValid} onClick={() => {}}>
+      <Button disabled={!formIsValid} onClick={handleSubmit}>
         Sign Up
       </Button>
     </form>

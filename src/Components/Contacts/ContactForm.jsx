@@ -7,14 +7,25 @@ import { isEmail, isEmpty, minLength } from "@/helpers/validators";
 import Input from "../UiElements/Input";
 
 import classes from "./ContactForm.module.css";
+import useForm from "@/hooks/useForm";
+
+const formValidators = { name: minLength, email: isEmail, subject: isEmpty };
+const initialState = {
+  name: { value: "", isValid: false, touched: false },
+  email: { value: "", isValid: false, touched: false },
+  subject: { value: "", isValid: false, touched: false },
+};
 
 export default function ContactForm() {
+  const { formState, handleChange, handleTouch, formIsValid } = useForm({
+    initialState,
+    formValidators,
+  });
+
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState(false);
-
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-
   const [subject, setSubject] = useState("");
   const [subjectError, setSubjectError] = useState(false);
 
@@ -22,7 +33,6 @@ export default function ContactForm() {
     e.preventDefault();
 
     // send to an api
-    console.log(name, email, subject);
     if (isEmpty(name) || !isEmail(email) || !minLength(subject)) {
       if (isEmpty(name)) {
         setNameError(true);
@@ -51,49 +61,47 @@ export default function ContactForm() {
       <Input
         id="name"
         type="text"
+        name="name"
         label="Name"
         placeholder="Write a valid name!"
-        value={name}
+        inputState={formState.name}
         error={nameError}
         errorText="Please provide a valid name!"
-        onChange={(e) => {
-          const { value } = e.target;
-          setName(value);
-          if (!isEmpty(value)) setNameError(false);
-        }}
+        onChange={handleChange}
+        onBlur={handleTouch}
+        minLength={3}
       />
 
       <Input
         id="email"
         type="email"
         label="Email"
+        inputState={formState.email}
+        name="email"
         placeholder="Write a valid email"
-        value={email}
         error={emailError}
         errorText="Please provide a valid email!"
-        onChange={(e) => {
-          const { value } = e.target;
-          setEmail(value);
-          if (isEmail(value)) setEmailError(false);
-        }}
+        onChange={handleChange}
+        onBlur={handleTouch}
       />
 
       <Input
         id="subject"
         type="textarea"
+        name="subject"
         label="Subject"
+        inputState={formState.subject}
         placeholder="Write the subject in details"
-        value={subject}
         error={subjectError}
         errorText="Subject should be at least 5 chars!"
-        onChange={(e) => {
-          const { value } = e.target;
-          setSubject(value);
-          if (minLength(value)) setSubjectError(false);
-        }}
+        onChange={handleChange}
+        onBlur={handleTouch}
+        minLength={5}
       />
 
-      <Button className={classes["btn"]}>Send</Button>
+      <Button disabled={!formIsValid} className={classes["btn"]}>
+        Send
+      </Button>
     </form>
   );
 }

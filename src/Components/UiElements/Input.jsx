@@ -11,6 +11,7 @@ export default function Input({
   errorText,
   onChange,
   onBlur,
+  minLength,
 }) {
   const { value, isValid, touched } = inputState;
 
@@ -25,6 +26,7 @@ export default function Input({
           onChange={onChange}
           onBlur={onBlur}
           value={value}
+          minLength={minLength}
         ></textarea>
       ) : (
         <input
@@ -35,6 +37,7 @@ export default function Input({
           onChange={onChange}
           onBlur={onBlur}
           value={value}
+          minLength={minLength}
         />
       )}
       <p className={classes["error"]}>{!isValid && touched ? errorText : ""}</p>
