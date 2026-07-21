@@ -1,0 +1,35 @@
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 450px;
+  margin: 40px auto;
+  padding: 35px;
+  background-color: var(--color-four);
+  border: 1px solid var(--color-one);
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(71, 180, 158, 0.15);
+}
+
+.mainForm h3 {
+  color: var(--color-one);
+  margin: auto;
+  text-align: center;
+  font-size: 26px;
+  text-transform: capitalize;
+}
+
+.mainForm div {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* .btn {
+  background-color: var(--color-four);
+  border: 1px solid gray;
+  color: var(--color-one);
+  width: fit-content;
+  padding: 5px 10px;
+  margin: auto;
+} */

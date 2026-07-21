@@ -6,6 +6,8 @@
 
 .form-input label {
   color: var(--color-two);
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .form-input input,

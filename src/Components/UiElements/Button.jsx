@@ -9,6 +9,7 @@ export default function Button({
   href,
   className,
   disabled,
+  type = "submit",
 }) {
   const classN = `${classes["button"]} ${danger ? classes["danger"] : ""} ${outline ? classes["outline"] : ""} ${className}`;
 

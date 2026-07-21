@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  isEmail,
-  isPast,
-  minLength,
-  passwordsMatch,
-} from "@/helpers/validators";
+import { isEmail, minLength } from "@/helpers/validators";
 import { useCallback } from "react";
 import Input from "../UiElements/Input";
 import Button from "../UiElements/Button";
@@ -13,21 +8,15 @@ import useForm from "@/hooks/useForm";
 import classes from "../GlobalStyles/forms.module.css";
 
 const formValidators = {
-  name: minLength,
   email: isEmail,
-  birthdate: isPast,
   password: minLength,
-  passwordConfirm: passwordsMatch,
 };
 const initialState = {
-  name: { value: "", isValid: false, touched: false },
   email: { value: "", isValid: false, touched: false },
-  birthdate: { value: "", isValid: false, touched: false },
   password: { value: "", isValid: false, touched: false },
-  passwordConfirm: { value: "", isValid: false, touched: false },
 };
 
-const SignUp = () => {
+export default function LoginForm() {
   const { formState, handleChange, handleTouch, formIsValid } = useForm({
     initialState,
     formValidators,
@@ -40,20 +29,7 @@ const SignUp = () => {
 
   return (
     <form onSubmit={handleSubmit} className={classes["mainForm"]}>
-      <h3>Create New Account</h3>
-      <Input
-        id="name"
-        type="text"
-        name="name"
-        label="Full Name"
-        placeholder="write ur full name"
-        errorText="Name should be at least 3 chars"
-        inputState={formState.name}
-        onChange={handleChange}
-        onBlur={handleTouch}
-        minLength={3}
-      />
-
+      <h3>Login to your account</h3>
       <Input
         id="email"
         type="email"
@@ -62,17 +38,6 @@ const SignUp = () => {
         placeholder="write an exist email"
         errorText="Please provide a valid email"
         inputState={formState.email}
-        onChange={handleChange}
-        onBlur={handleTouch}
-      />
-
-      <Input
-        id="birthdate"
-        type="date"
-        name="birthdate"
-        label="Birthdate"
-        errorText="Please provide a valid birthdate"
-        inputState={formState.birthdate}
         onChange={handleChange}
         onBlur={handleTouch}
       />
@@ -90,28 +55,18 @@ const SignUp = () => {
         minLength={6}
       />
 
-      <Input
-        id="passwordConfirm"
-        type="password"
-        name="passwordConfirm"
-        label="PasswordConfirm"
-        errorText="Passwords must match"
-        placeholder="******"
-        inputState={formState.passwordConfirm}
-        onChange={handleChange}
-        onBlur={handleTouch}
-      />
-
       <div>
         <Button disabled={!formIsValid} onClick={handleSubmit}>
-          Sign Up
+          Log In
         </Button>
-        <Button onClick={handleSubmit} href="/login">
-          Login To Your Account
+        <Button onClick={handleSubmit} href="/sign-up">
+          Create New Account
         </Button>
       </div>
+
+      <Button onClick={handleSubmit} outline>
+        Continue with google
+      </Button>
     </form>
   );
-};
-
-export default SignUp;
+}

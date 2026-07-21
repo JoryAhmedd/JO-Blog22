@@ -23,6 +23,7 @@ export default function Navbar() {
         <NavLink href="/blog" text="Blog" hideNavList={hideNavList} />
         <NavLink href="/about" text="About" hideNavList={hideNavList} />
         <NavLink href="/contacts" text="Contacts" hideNavList={hideNavList} />
+        <NavLink href="/login" text="Login" hideNavList={hideNavList} />
         <NavLink href="/sign-up" text="Sign-Up" hideNavList={hideNavList} />
       </ul>
 
@@ -31,6 +32,7 @@ export default function Navbar() {
         className={classes["menu-button"]}
         aria-label="menu"
       >
+        <span></span>
         <span></span>
         <span></span>
         <span></span>

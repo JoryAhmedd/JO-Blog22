@@ -33,8 +33,8 @@ export default function useForm({initialState, formValidators}) {
 
       const formIsValid = useMemo(
         // لو مفيش اي فورم ب فولس يبقى ترو
-        () => Object.keys(formState).some((k) => !formState[k].isValid),
-        [formState],
+            () => !Object.keys(formState).some((k) => !formState[k].isValid),
+    [formState],
         // القوسين اللي في الاخر دول معناهم اننا عايزاها تشتغل لما ال فورم ستيت تتغير
       );
 
