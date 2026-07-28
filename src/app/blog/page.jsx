@@ -1,40 +1,91 @@
 "use client";
 
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import Button from "@/Components/UiElements/Button";
 
 import classes from "./page.module.css";
 
+const initialState = 0;
+const MAX = 10;
+const MIN = 0;
+// بزود بكام
+const AMOUNT = 2;
+
+const reducer = (state, action) => {
+  const { type, amount } = action;
+  // {
+
+  //   if (type === "INCREMENT") {
+  //     return state >= 10 ? state : state + 1;
+  //   }
+
+  // if (type === "DECREMENT") {
+  //   return state <= 0 ? state : state - 1;
+  // }
+
+  // if (type === "RESET") {
+  //   return initialState;
+  // }
+
+  // if (type === "INCREASE") {
+  //   return state >= 10 ? state : state + amount;
+  // }
+
+  // return state;}
+
+  switch (type) {
+    case "INCREMENT":
+      return state >= MAX ? state : state + 1;
+
+    case "DECREMENT":
+      return state <= MIN ? state : state - 1;
+
+    case "RESET":
+      return initialState;
+
+    case "INCREASE":
+      return state >= MAX ? state : state + AMOUNT;
+
+    default:
+      return state;
+  }
+};
+
 export default function BlogPage() {
-  const [counter, setCounter] = useState(0);
+  const [count, dispatch] = useReducer(reducer, initialState);
+
+  //
   const [showList, setShowList] = useState(true);
 
-  const increaseCounter = () =>
-    setCounter((prev) => (prev >= 10 ? prev : prev + 1));
+  const increaseCount = () => dispatch({ type: "INCREMENT", amount: 2 });
+  const decreaseCount = () => dispatch({ type: "DECREMENT" });
+  const resetCount = () => dispatch({ type: "RESET" });
+  const increase = () => dispatch({ type: "INCREASE", amount: 5 });
 
-  const decreaseCounter = () =>
-    setCounter((prev) => (prev <= 0 ? prev : prev - 1));
-
-  const resetCounter = () => setCounter(0);
-
+  //
   const toggleMenu = () => setShowList((prev) => !prev);
 
   return (
     <section>
       <h2>Blog Page</h2>
       <div>
-        <p>{counter}</p>
+        <p>{count}</p>
 
         <section className={classes["actions"]}>
-          <Button onClick={increaseCounter} disabled={counter >= 10}>
+          <Button onClick={increaseCount} disabled={count >= MAX}>
             +
           </Button>
-          <Button onClick={decreaseCounter} outline disabled={counter <= 0}>
+          <Button onClick={decreaseCount} outline disabled={count <= MIN}>
             -
           </Button>
-          <Button onClick={resetCounter} danger disabled={counter === 0}>
+
+          <Button onClick={increase}>+{AMOUNT}</Button>
+
+          <Button onClick={resetCount} danger disabled={count === 0}>
             Reset
           </Button>
+
+          {/*  */}
         </section>
       </div>
 
