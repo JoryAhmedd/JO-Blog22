@@ -15,15 +15,15 @@
   font-weight: 400;
 }
 
+.button:hover {
+  opacity: 0.85;
+}
+
 .button:disabled {
   cursor: not-allowed;
   background-color: #ccc;
   border-color: #ccc;
   color: #777;
-}
-
-.button:hover {
-  opacity: 0.85;
 }
 
 .button:disabled:hover {
@@ -50,4 +50,9 @@
 .outline:disabled:hover {
   background-color: #ccc;
   color: #777;
+}
+
+.success {
+  background-color: var(--green);
+  border-color: var(--green);
 }

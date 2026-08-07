@@ -8,6 +8,7 @@ const initialState = {
   lives: 3,
   level: 1,
 };
+
 const reducer = (state, action) => {
   const { type, amount } = action;
 
