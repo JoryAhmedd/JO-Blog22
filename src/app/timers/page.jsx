@@ -1,4 +1,5 @@
 import StopWatch from "@/Components/Timers/StopWatch";
+import Countdown from "@/Components/Timers/Countdown";
 
 export const metadata = {
   title: "Timers",
@@ -9,6 +10,7 @@ export default function TimersPage() {
   return (
     <div>
       <StopWatch />
+      <Countdown duration={8_000} />
     </div>
   );
 }

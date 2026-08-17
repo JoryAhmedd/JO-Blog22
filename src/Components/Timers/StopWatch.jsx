@@ -3,6 +3,7 @@
 import { useEffect, useReducer } from "react";
 import Button from "../UiElements/Button";
 import classes from "@/Components/Timers/StopWatch.module.css";
+import handleTime from "@/helpers/handleTime";
 
 const initialState = {
   time: 0,
@@ -94,14 +95,7 @@ export default function StopWatch() {
     };
   }, [state.isRunning, state.startTime, state.elapsedTime]);
 
-  //   calculating times
-  const minutes = Math.floor(state.time / (1000 * 60))
-    .toString()
-    .padStart(2, "0");
-  const seconds = Math.floor(state.time / 1000)
-    .toString()
-    .padStart(2, "0");
-  const mill = Math.floor((state.time % 1000) / 10);
+  const { minutes, seconds, mill } = handleTime(state.time);
 
   return (
     <section>
