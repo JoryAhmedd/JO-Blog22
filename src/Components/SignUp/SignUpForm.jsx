@@ -12,22 +12,31 @@ import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
 import classes from "../GlobalStyles/forms.module.css";
 
-const formValidators = {
-  name: minLength,
-  email: isEmail,
-  birthdate: isPast,
-  password: minLength,
-  passwordConfirm: passwordsMatch,
-};
-const initialState = {
-  name: { value: "", isValid: false, touched: false },
-  email: { value: "", isValid: false, touched: false },
-  birthdate: { value: "", isValid: false, touched: false },
-  password: { value: "", isValid: false, touched: false },
-  passwordConfirm: { value: "", isValid: false, touched: false },
-};
+const SignUp = ({ login }) => {
+  const formValidators = {
+    name: minLength,
+    email: isEmail,
+    birthdate: isPast,
+    password: minLength,
+    passwordConfirm: passwordsMatch,
+  };
 
-const SignUp = () => {
+  const initialState = {
+    name: { value: "", isValid: false, touched: false },
+    email: { value: "", isValid: false, touched: false },
+    birthdate: { value: "", isValid: false, touched: false },
+    password: { value: "", isValid: false, touched: false },
+    passwordConfirm: { value: "", isValid: false, touched: false },
+  };
+
+  if (login) {
+    delete formValidators["name"];
+    delete formValidators["birthdate"];
+    delete formValidators["passwordConfirm"];
+    delete initialState["name"];
+    delete initialState["birthdate"];
+    delete initialState["passwordConfirm"];
+  }
   const { formState, handleChange, handleTouch, formIsValid } = useForm({
     initialState,
     formValidators,
@@ -40,19 +49,22 @@ const SignUp = () => {
 
   return (
     <form onSubmit={handleSubmit} className={classes["mainForm"]}>
-      <h3>Create New Account</h3>
-      <Input
-        id="name"
-        type="text"
-        name="name"
-        label="Full Name"
-        placeholder="write ur full name"
-        errorText="Name should be at least 3 chars"
-        inputState={formState.name}
-        onChange={handleChange}
-        onBlur={handleTouch}
-        minLength={3}
-      />
+      <h3>{login ? "Log into your account" : "create new account"}</h3>
+
+      {!login && (
+        <Input
+          id="name"
+          type="text"
+          name="name"
+          label="Full Name"
+          placeholder="write ur full name"
+          errorText="Name should be at least 3 chars"
+          inputState={formState.name}
+          onChange={handleChange}
+          onBlur={handleTouch}
+          minLength={3}
+        />
+      )}
 
       <Input
         id="email"
@@ -66,16 +78,18 @@ const SignUp = () => {
         onBlur={handleTouch}
       />
 
-      <Input
-        id="birthdate"
-        type="date"
-        name="birthdate"
-        label="Birthdate"
-        errorText="Please provide a valid birthdate"
-        inputState={formState.birthdate}
-        onChange={handleChange}
-        onBlur={handleTouch}
-      />
+      {!login && (
+        <Input
+          id="birthdate"
+          type="date"
+          name="birthdate"
+          label="Birthdate"
+          errorText="Please provide a valid birthdate"
+          inputState={formState.birthdate}
+          onChange={handleChange}
+          onBlur={handleTouch}
+        />
+      )}
 
       <Input
         id="password"
@@ -90,24 +104,26 @@ const SignUp = () => {
         minLength={6}
       />
 
-      <Input
-        id="passwordConfirm"
-        type="password"
-        name="passwordConfirm"
-        label="PasswordConfirm"
-        errorText="Passwords must match"
-        placeholder="******"
-        inputState={formState.passwordConfirm}
-        onChange={handleChange}
-        onBlur={handleTouch}
-      />
+      {!login && (
+        <Input
+          id="passwordConfirm"
+          type="password"
+          name="passwordConfirm"
+          label="PasswordConfirm"
+          errorText="Passwords must match"
+          placeholder="******"
+          inputState={formState.passwordConfirm}
+          onChange={handleChange}
+          onBlur={handleTouch}
+        />
+      )}
 
       <div>
         <Button disabled={!formIsValid} onClick={handleSubmit}>
-          Sign Up
+          {login ? "Login" : "Sign up"}
         </Button>
         <Button onClick={handleSubmit} href="/login">
-          Login To Your Account
+          {login ? "Sign in" : "Login To Your Account"}
         </Button>
       </div>
     </form>

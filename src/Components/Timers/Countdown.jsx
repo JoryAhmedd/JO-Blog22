@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import Button from "../UiElements/Button";
 import handleTime from "@/helpers/handleTime";
 
-export default function Countdown({ duration = 8_000 }) {
+const now = Date.now();
+// لو مش موجودة ي اي مكان تاني تبقى دي البديل
+export default function Countdown({ duration = 20_000, running, control }) {
   const initialState = {
     timeLeft: duration,
-    endTime: null,
-    isRunning: false,
+    endTime: running ? now + duration : null,
+    isRunning: running,
   };
 
   const reducer = (state, action) => {
@@ -109,12 +111,20 @@ export default function Countdown({ duration = 8_000 }) {
         {minutes}:{seconds}.{mill}
       </p>
 
-      <Button onClick={start}>Start</Button>
-      <Button onClick={resume} disabled={state.isRunning}>
-        Resume
-      </Button>
-      <Button onClick={pause}>Pause</Button>
-      <Button onClick={reset}>Reset</Button>
+      {control && (
+        <div>
+          <Button success onClick={start}>
+            Start
+          </Button>
+          <Button outline onClick={resume}>
+            Resume
+          </Button>
+          <Button danger onClick={pause}>
+            Pause
+          </Button>
+          <Button onClick={reset}>Reset</Button>
+        </div>
+      )}
     </div>
   );
 }

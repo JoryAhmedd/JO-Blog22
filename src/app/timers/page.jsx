@@ -10,7 +10,7 @@ export default function TimersPage() {
   return (
     <div>
       <StopWatch />
-      <Countdown duration={8_000} />
+      <Countdown duration={5_000} control />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useReducer } from "react";
 import Button from "../UiElements/Button";
+import Countdown from "../Timers/Countdown";
 
 const initialState = {
   score: 0,
@@ -76,6 +77,8 @@ const About = () => {
         <Button onClick={loseLevels} danger>
           Levels -
         </Button>
+
+        <Countdown duration={5_000} control={false} running />
       </section>
     </div>
   );
