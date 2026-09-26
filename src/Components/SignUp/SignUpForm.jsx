@@ -6,11 +6,11 @@ import {
   minLength,
   passwordsMatch,
 } from "@/helpers/validators";
-import { useCallback } from "react";
 import Input from "../UiElements/Input";
 import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
 import classes from "../GlobalStyles/forms.module.css";
+import { login as loginUser } from "@/actions/users";
 
 const SignUp = ({ login }) => {
   const formValidators = {
@@ -42,10 +42,22 @@ const SignUp = ({ login }) => {
     formValidators,
   });
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    console.log("sent");
-  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault(); //prevent refresh
+
+    if (login) {
+      try {
+        const res = loginUser({
+          email: formState.email.value,
+          password: formState.password.value,
+        });
+        console.log(res);
+      } catch {
+        console.log(e);
+      }
+    } else {
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className={classes["mainForm"]}>
@@ -119,9 +131,7 @@ const SignUp = ({ login }) => {
       )}
 
       <div>
-        <Button disabled={!formIsValid} onClick={handleSubmit}>
-          {login ? "Login" : "Sign up"}
-        </Button>
+        <Button onClick={handleSubmit}>{login ? "Login" : "Sign Up"}</Button>
         <Button onClick={handleSubmit} href="/login">
           {login ? "Sign in" : "Login To Your Account"}
         </Button>
