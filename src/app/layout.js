@@ -2,6 +2,7 @@
 import Navbar from "@/Components/Navbar/Navbar";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { UserProvider } from "@/context/UserContext";
 
 export const metadata = {
   title: "JO Blog",
@@ -12,12 +13,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <ThemeProvider>
-          <Navbar />
-          <main className="main">
-            <section className="main-section">{children}</section>
-          </main>
-        </ThemeProvider>
+          <ThemeProvider>
+            <Navbar />
+            <main className="main">
+              <section className="main-section">{children}</section>
+            </main>
+          </ThemeProvider>
       </body>
     </html>
   );

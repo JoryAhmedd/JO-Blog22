@@ -11,8 +11,11 @@ import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
 import classes from "../GlobalStyles/forms.module.css";
 import { login as loginUser } from "@/actions/users";
+import { useState } from "react";
 
 const SignUp = ({ login }) => {
+  const [error, setError] = useState("");
+
   const formValidators = {
     name: minLength,
     email: isEmail,
@@ -46,14 +49,18 @@ const SignUp = ({ login }) => {
     e.preventDefault(); //prevent refresh
 
     if (login) {
+      setError("");
+      // try catch block
+      // حاول تنفذ الكود لو معرفتش نزلني لل كاتش
       try {
         const res = loginUser({
           email: formState.email.value,
           password: formState.password.value,
         });
         console.log(res);
-      } catch {
-        console.log(e);
+      } catch (error) {
+        console.log(error.message || "something went wrong!");
+        setError(error.message || "something went wrong!");
       }
     } else {
     }
@@ -136,6 +143,7 @@ const SignUp = ({ login }) => {
           {login ? "Sign in" : "Login To Your Account"}
         </Button>
       </div>
+      {error && <p>{error}</p>}
     </form>
   );
 };
