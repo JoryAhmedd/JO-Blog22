@@ -18,7 +18,7 @@ export const login = ({email, password}) => {
 
     // search user
     const userExist = usersDB.find((user) => user.email === email);
-
+    
     // بندور على اليوزر
     // check if user exists
     if (!userExist) {
@@ -31,8 +31,8 @@ export const login = ({email, password}) => {
     }
 
     // مينفعش ارجع الباسورد ابدا للفرونت اند
-    delete userExist.password
-
-    // return user
-    return userExist;
-}
+    // delete userExist.password;
+    userExist.password = undefined;
+    console.log("User found:", userExist);
+    return userData;
+};

@@ -12,9 +12,13 @@ import useForm from "@/hooks/useForm";
 import classes from "../GlobalStyles/forms.module.css";
 import { login as loginUser } from "@/actions/users";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
 
 const SignUp = ({ login }) => {
   const [error, setError] = useState("");
+  const { setUser } = useUser();
+  const router = useRouter();
 
   const formValidators = {
     name: minLength,
@@ -53,13 +57,14 @@ const SignUp = ({ login }) => {
       // try catch block
       // حاول تنفذ الكود لو معرفتش نزلني لل كاتش
       try {
-        const res = loginUser({
+        const user = loginUser({
           email: formState.email.value,
           password: formState.password.value,
         });
-        console.log(res);
+        // put it in global state
+        setUser(user);
+        router.push("/");
       } catch (error) {
-        console.log(error.message || "something went wrong!");
         setError(error.message || "something went wrong!");
       }
     } else {

@@ -73,6 +73,15 @@
     cursor: pointer;
 }
 
+.sign-out {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-two);
+    font-size: 20px;
+    font-weight: bold;
+}
+
 /* 
     -small (phone): from 640px or 767px
     -medium (ipads) : from 992px or 1024px

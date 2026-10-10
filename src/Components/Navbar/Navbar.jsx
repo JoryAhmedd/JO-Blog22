@@ -7,10 +7,12 @@ import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { IoSunnyOutline } from "react-icons/io5";
 import { FaMoon } from "react-icons/fa";
+import { useUser } from "@/context/UserContext";
 
 export default function Navbar() {
   const [showNavList, setShowNavList] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { user, setUser } = useUser();
 
   const toggleNavList = () => setShowNavList(!showNavList);
   const hideNavList = () => setShowNavList(false);
@@ -32,12 +34,21 @@ export default function Navbar() {
         <NavLink href="/blog" text="Blog" hideNavList={hideNavList} />
         <NavLink href="/about" text="About" hideNavList={hideNavList} />
         <NavLink href="/contacts" text="Contacts" hideNavList={hideNavList} />
-        <NavLink href="/login" text="Login" hideNavList={hideNavList} />
-        <NavLink
-          href="/sign-up"
-          text="Sign-Up"
-          hideNavList={hideNavList}
-        />{" "}
+
+        {!user ? (
+          <>
+            <NavLink href="/login" text="Login" hideNavList={hideNavList} />
+            <NavLink
+              href="/sign-up"
+              text="Sign-Up"
+              hideNavList={hideNavList}
+            />{" "}
+          </>
+        ) : (
+          <button onClick={() => setUser(null)} className={classes["sign-out"]}>
+            Sign out
+          </button>
+        )}
       </ul>
 
       <button
